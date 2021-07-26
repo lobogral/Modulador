@@ -2,21 +2,21 @@ from sys import path, argv
 import re
 import os
 
-# Agrego los módulos correspondientes a un programa
-def agregarModulos(ruta): 
-    for modulo in os.listdir(ruta):
-        path.append(ruta + modulo + '/código/')
-        if os.path.isdir(ruta + modulo + '/módulos/'):
-            agregarModulos(ruta + modulo + '/módulos/')
+# Agrego las dependencias de un programa
+def agregarDependencias(ruta): 
+    for dependencia in os.listdir(ruta):
+        path.append(ruta + dependencia + '/código/')
+        if os.path.isdir(ruta + dependencia + '/módulos/'):
+            agregarDependencias(ruta + dependencia + '/módulos/')
 
 # Busco el programa a ejecutar
 arch = open("programa.txt", "r")
 rutaPrograma = '../codes/' + arch.readline() + '/'
 arch.close()
 
-# Agrego los módulos al programa
+# Agrego las dependencias al programa
 if os.path.isdir(rutaPrograma + '/módulos/'):
-    agregarModulos(rutaPrograma + '/módulos/')
+    agregarDependencias(rutaPrograma + '/módulos/')
 
 # Ejecuto el programa
 rutaSubPrograma = rutaPrograma + '/código/' + argv[1]

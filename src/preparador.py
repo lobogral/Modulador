@@ -5,30 +5,30 @@ import os
 # Comando clonar
 comandoClonar = 'git clone https://github.com/lobogral/'
 
-# Importa los módulos que necesita el programa
-def importarModulos(lista):
+# Importa las dependencias que necesita el programa
+def importarDependencias(depsImportadas):
     arch = open('dependencias.txt', 'r')
-    modulos = [linea.rstrip('\n') for linea in arch.readlines()]
-    modulos = [val for val in modulos if val not in lista]
+    depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
+    depsImportar = [val for val in depsImportar if val not in depsImportadas]
     arch.close()
 
-    if modulos:
+    if depsImportar:
         os.mkdir('módulos')
         os.chdir('módulos')
     
-    for modulo in modulos:
-        if modulo not in lista:
-            lista += [modulo]
-            os.system(comandoClonar + modulo)
-            os.chdir(modulo)
+    for depImportar in depsImportar:
+        if depImportar not in depsImportadas:
+            depsImportadas += [depImportar]
+            os.system(comandoClonar + depImportar)
+            os.chdir(depImportar)
             if os.path.isfile('dependencias.txt'):
-                lista = importarModulos(lista)
+                depsImportadas = importarDependencias(depsImportadas)
             os.chdir('..')
 
-    if modulos:
+    if depsImportar:
         os.chdir('..')
 
-    return lista
+    return depsImportadas
 
 # Agrego en un archivo el programa correspondiente
 arch = open("programa.txt", "w")
@@ -43,6 +43,6 @@ os.chdir('codes')
 if (not os.path.isdir(argv[1])):
     os.system(comandoClonar + argv[1])
     os.chdir(argv[1])
-    if os.path.isfile('dependencias.txt'): importarModulos([])
+    if os.path.isfile('dependencias.txt'): importarDependencias([])
     os.chdir('..')
 
