@@ -27,8 +27,11 @@ def importarDependencias(depsImportadas):
 
     return depsImportadas
 
-# Agrego en un archivo el programa correspondiente
-arch = open("programa.txt", "w")
+# Agrego en un archivo temporal el programa correspondiente
+os.chdir('..')
+if (not os.path.isdir('temp')): os.mkdir('temp')
+os.chdir('temp')
+arch = open("code.txt", "w")
 arch.write(argv[1].split('/').pop())
 arch.close()
 

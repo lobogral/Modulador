@@ -10,7 +10,8 @@ def agregarDependencias(ruta):
             agregarDependencias(ruta + dependencia + '/módulos/')
 
 # Busco el programa a ejecutar
-arch = open("programa.txt", "r")
+os.chdir('../temp')
+arch = open("code.txt", "r")
 rutaPrograma = '../codes/' + arch.readline() + '/'
 arch.close()
 
