@@ -2,10 +2,7 @@ from sys import path, argv
 import re
 import os
 
-# Comando clonar
-comandoClonar = 'git clone https://github.com/lobogral/'
-
-# Importa las dependencias que necesita el programa
+# Importa las dependencias que necesita un programa
 def importarDependencias(depsImportadas):
     arch = open('dependencias.txt', 'r')
     depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
@@ -19,8 +16,8 @@ def importarDependencias(depsImportadas):
     for depImportar in depsImportar:
         if depImportar not in depsImportadas:
             depsImportadas += [depImportar]
-            os.system(comandoClonar + depImportar)
-            os.chdir(depImportar)
+            os.system('git clone ' + depImportar)
+            os.chdir(depImportar.split('/').pop())
             if os.path.isfile('dependencias.txt'):
                 depsImportadas = importarDependencias(depsImportadas)
             os.chdir('..')
@@ -32,7 +29,7 @@ def importarDependencias(depsImportadas):
 
 # Agrego en un archivo el programa correspondiente
 arch = open("programa.txt", "w")
-arch.write(argv[1])
+arch.write(argv[1].split('/').pop())
 arch.close()
 
 # Importa el programa correspondiente
@@ -41,8 +38,8 @@ if (not os.path.isdir('codes')): os.mkdir('codes')
 os.chdir('codes')
 
 if (not os.path.isdir(argv[1])):
-    os.system(comandoClonar + argv[1])
-    os.chdir(argv[1])
+    os.system('git clone ' + argv[1])
+    os.chdir(argv[1].split('/').pop())
     if os.path.isfile('dependencias.txt'): importarDependencias([])
     os.chdir('..')
 
