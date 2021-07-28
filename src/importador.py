@@ -4,21 +4,21 @@ import os
 
 # Importa las dependencias que necesita un programa
 def importarDependencias(depsImportadas):
-    arch = open('dependencias.txt', 'r')
+    arch = open('deps.txt', 'r')
     depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
     depsImportar = [val for val in depsImportar if val not in depsImportadas]
     arch.close()
 
     if depsImportar:
-        os.mkdir('módulos')
-        os.chdir('módulos')
+        os.mkdir('modules')
+        os.chdir('modules')
     
     for depImportar in depsImportar:
         if depImportar not in depsImportadas:
             depsImportadas += [depImportar]
             os.system('git clone ' + depImportar)
             os.chdir(depImportar.split('/').pop())
-            if os.path.isfile('dependencias.txt'):
+            if os.path.isfile('deps.txt'):
                 depsImportadas = importarDependencias(depsImportadas)
             os.chdir('..')
 
@@ -43,6 +43,6 @@ os.chdir('codes')
 if (not os.path.isdir(argv[1])):
     os.system('git clone ' + argv[1])
     os.chdir(argv[1].split('/').pop())
-    if os.path.isfile('dependencias.txt'): importarDependencias([])
+    if os.path.isfile('deps.txt'): importarDependencias([])
     os.chdir('..')
 
