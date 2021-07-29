@@ -19,4 +19,7 @@ if os.path.isdir('../modules/'):
     agregarDependencias('../modules/')
 
 # Ejecuto el programa
-exec(open(argv[1]).read())
+arch = open(argv[1], "r")
+programa = arch.read()
+arch.close()
+exec(programa)
