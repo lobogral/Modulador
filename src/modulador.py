@@ -10,7 +10,8 @@ importarRepositorio(repositorio)
 """
 """
 modulo = argv[1]
-ejecutarModulo(modulo)
+argv = argv[1:]
+ejecutarModulo(modulo, argv)
 """
 """
 tieneModulos = argv[1]

@@ -1,4 +1,4 @@
-from sys import path, argv
+from sys import path
 import os
 
 def agregarDependencias(ruta): 
@@ -7,7 +7,7 @@ def agregarDependencias(ruta):
         if os.path.isdir(ruta + dependencia + '/modules/'):
             agregarDependencias(ruta + dependencia + '/modules/')
 
-def ejecutarModulo(modulo):
+def ejecutarModulo(modulo, argv):
     # Busco el programa a ejecutar y accedo a su ruta
     os.chdir('../temp')
     arch = open("code.txt", "r")
