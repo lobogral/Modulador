@@ -1,8 +1,6 @@
-from sys import path, argv
-import re
+from sys import path
 import os
 
-# Importa las dependencias que necesita un programa
 def importarDependencias(depsImportadas):
     arch = open('deps.txt', 'r')
     depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
@@ -27,22 +25,23 @@ def importarDependencias(depsImportadas):
 
     return depsImportadas
 
-# Agrego en un archivo temporal el programa correspondiente
-os.chdir('..')
-if (not os.path.isdir('temp')): os.mkdir('temp')
-os.chdir('temp')
-arch = open("code.txt", "w")
-arch.write(argv[1].split('/').pop())
-arch.close()
 
-# Importa el programa correspondiente
-os.chdir('..')
-if (not os.path.isdir('codes')): os.mkdir('codes')
-os.chdir('codes')
-
-if (not os.path.isdir(argv[1])):
-    os.system('git clone ' + argv[1])
-    os.chdir(argv[1].split('/').pop())
-    if os.path.isfile('deps.txt'): importarDependencias([])
+def importarRepositorio(repositorio):
+    # Agrego en un archivo temporal el programa correspondiente
     os.chdir('..')
+    if (not os.path.isdir('temp')): os.mkdir('temp')
+    os.chdir('temp')
+    arch = open("code.txt", "w")
+    arch.write(repositorio.split('/').pop())
+    arch.close()
 
+    # Importa el programa correspondiente
+    os.chdir('..')
+    if (not os.path.isdir('codes')): os.mkdir('codes')
+    os.chdir('codes')
+
+    if (not os.path.isdir(repositorio.split('/').pop())):
+        os.system('git clone ' + repositorio)
+        os.chdir(repositorio.split('/').pop())
+        if os.path.isfile('deps.txt'): importarDependencias([])
+        os.chdir('..')

@@ -1,28 +1,27 @@
-from sys import argv
 import os
 
-repositorio = argv[1]
+def agregarRepositorio(tieneModulos, repositorio):
+    
+    os.chdir('../codes')
 
-os.chdir('../codes')
+    os.system('git clone ' + repositorio)
 
-os.system('git clone ' + repositorio)
+    os.chdir(repositorio.split('/').pop())
+    os.mkdir('src')
+    os.chdir('src')
 
-os.chdir(repositorio.split('/').pop())
-os.mkdir('src')
-os.chdir('src')
+    arch = open("holaMundo.py", "w")
+    arch.write("print('Hola mundo')")
+    arch.close()
 
-arch = open("holaMundo.py", "w")
-arch.write("print('Hola mundo')")
-arch.close()
+    os.chdir('..')
 
-os.chdir('..')
+    arch = open(".gitignore", "w")
+    arch.write("__pycache__")
+    if tieneModulos=='-s': arch.write("\nmodules/")
+    arch.close()
 
-arch = open(".gitignore", "w")
-arch.write("__pycache__")
-if argv[2]=='-s': arch.write("\nmodules/")
-arch.close()
+    if tieneModulos=='-s': open("deps.txt", "w").close()
 
-if argv[2]=='-s': open("deps.txt", "w").close()
-
-os.system('git add .')
-os.system('git commit -m "Agrego esqueleto"')
+    os.system('git add .')
+    os.system('git commit -m "Agrego esqueleto"')
