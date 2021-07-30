@@ -19,7 +19,10 @@ os.chdir('..')
 
 arch = open(".gitignore", "w")
 arch.write("__pycache__")
+if argv[2]=='-s': arch.write("\nmodules/")
 arch.close()
+
+if argv[2]=='-s': open("deps.txt", "w").close()
 
 os.system('git add .')
 os.system('git commit -m "Agrego esqueleto"')
