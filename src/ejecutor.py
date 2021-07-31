@@ -22,4 +22,6 @@ def ejecutarModulo(modulo, argv):
     arch = open(modulo + ".py", "r")
     programa = arch.read()
     arch.close()
+
+    # Aquí se está usando argv implícitamente
     exec(programa)
