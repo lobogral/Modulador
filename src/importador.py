@@ -27,7 +27,7 @@ def __importarDependencias(depsImportadas):
 
 
 def importarRepositorio(repositorio):
-    # Agrego en un archivo temporal el programa correspondiente
+    # Agrego en un archivo temporal el nombre del repositorio
     os.chdir('..')
     if (not os.path.isdir('temp')): os.mkdir('temp')
     os.chdir('temp')
@@ -35,7 +35,7 @@ def importarRepositorio(repositorio):
     arch.write(repositorio.split('/').pop())
     arch.close()
 
-    # Importa el programa correspondiente
+    # Importa el repositorio correspondiente
     os.chdir('..')
     if (not os.path.isdir('codes')): os.mkdir('codes')
     os.chdir('codes')
