@@ -4,17 +4,16 @@ from importador import importarRepositorio
 from ejecutor import ejecutarModulo
 from agregador import agregarRepositorio
 
-"""
-repositorio = argv[1]
-importarRepositorio(repositorio)
-"""
-"""
-modulo = argv[1]
-argv = argv[1:]
-ejecutarModulo(modulo, argv)
-"""
-"""
-tieneModulos = argv[1]
-repositorio = argv[2]
-agregarRepositorio(tieneModulos, repositorio)
-"""
+opcion = argv[1]
+
+if opcion == '-i':
+    repositorio = argv[2]
+    importarRepositorio(repositorio)
+elif opcion == '-e':
+    modulo = argv[2]
+    argv = argv[2:]
+    ejecutarModulo(modulo, argv)
+elif opcion == '-a':
+    tieneModulos = argv[2]
+    repositorio = argv[3]
+    agregarRepositorio(tieneModulos, repositorio)
