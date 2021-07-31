@@ -1,7 +1,7 @@
 from sys import path
 import os
 
-def importarDependencias(depsImportadas):
+def __importarDependencias(depsImportadas):
     arch = open('deps.txt', 'r')
     depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
     depsImportar = [val for val in depsImportar if val not in depsImportadas]
@@ -17,7 +17,7 @@ def importarDependencias(depsImportadas):
             os.system('git clone ' + depImportar)
             os.chdir(depImportar.split('/').pop())
             if os.path.isfile('deps.txt'):
-                depsImportadas = importarDependencias(depsImportadas)
+                depsImportadas = __importarDependencias(depsImportadas)
             os.chdir('..')
 
     if depsImportar:
@@ -43,5 +43,5 @@ def importarRepositorio(repositorio):
     if (not os.path.isdir(repositorio.split('/').pop())):
         os.system('git clone ' + repositorio)
         os.chdir(repositorio.split('/').pop())
-        if os.path.isfile('deps.txt'): importarDependencias([])
+        if os.path.isfile('deps.txt'): __importarDependencias([])
         os.chdir('..')
