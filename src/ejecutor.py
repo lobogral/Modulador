@@ -1,22 +1,34 @@
 from sys import path
 import os
 
-def __agregarSrcDependencias(ruta): 
-    for dependencia in os.listdir(ruta):
-        path.append(ruta + dependencia + '/src/')
-        if os.path.isdir(ruta + dependencia + '/modules/'):
-            __agregarSrcDependencias(ruta + dependencia + '/modules/')
+def __agregarSrcDependencias(urlsDepsAgregadas, nombreRep):
+    arch = open('../../' + nombreRep + '/deps.txt', 'r')
+    urlsDepsAgregar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
+    urlsDepsAgregar = [val for val in urlsDepsAgregar if val not in urlsDepsAgregadas]
+    arch.close()
+    
+    for urlDepAgregar in urlsDepsAgregar:
+        if urlDepAgregar not in urlsDepsAgregadas:
+            urlsDepsAgregadas += [urlDepAgregar]
+            nombreDep = urlDepAgregar.split('/').pop()
+            path.append('../../' + nombreDep + '/src/')
+            if os.path.isfile('../../' + nombreDep + '/deps.txt'):
+                urlsDepsAgregadas = __agregarSrcDependencias(urlsDepsAgregadas, nombreDep)
+
+    return urlsDepsAgregadas
 
 def ejecutarModulo(nombreModRep, argv):
     # Busco el src del repositorio y accedo a su ruta
     os.chdir('../temp')
     arch = open("code.txt", "r")
-    os.chdir('../codes/' + arch.readline() + '/src/')
+    nombreRep = arch.readline()
     arch.close()
 
+    os.chdir('../codes/' + nombreRep + '/src/')
+
     # Agrego los src de las dependencias del repositorio
-    if os.path.isdir('../modules/'):
-        __agregarSrcDependencias('../modules/')
+    if os.path.isfile('../../' + nombreRep + '/deps.txt'):
+        __agregarSrcDependencias([], nombreRep)
 
     # Ejecuto un modulo del repositorio
     arch = open(nombreModRep + ".py", "r")
