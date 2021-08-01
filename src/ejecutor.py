@@ -7,7 +7,7 @@ def __agregarSrcDependencias(ruta):
         if os.path.isdir(ruta + dependencia + '/modules/'):
             __agregarSrcDependencias(ruta + dependencia + '/modules/')
 
-def ejecutarModulo(modulo, argv):
+def ejecutarModulo(nombreModRep, argv):
     # Busco el src del repositorio y accedo a su ruta
     os.chdir('../temp')
     arch = open("code.txt", "r")
@@ -19,9 +19,9 @@ def ejecutarModulo(modulo, argv):
         __agregarSrcDependencias('../modules/')
 
     # Ejecuto un modulo del repositorio
-    arch = open(modulo + ".py", "r")
-    programa = arch.read()
+    arch = open(nombreModRep + ".py", "r")
+    moduloRep = arch.read()
     arch.close()
 
     # Aquí se está usando argv implícitamente
-    exec(programa)
+    exec(moduloRep)

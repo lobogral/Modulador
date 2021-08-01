@@ -6,13 +6,13 @@ from agregador import agregarRepositorio
 opcion = argv[1]
 
 if opcion == '-i':
-    repositorio = argv[2]
-    importarRepositorio(repositorio)
+    urlRep = argv[2]
+    importarRepositorio(urlRep)
 elif opcion == '-e':
-    modulo = argv[2]
+    nombreModRep = argv[2]
     argv = argv[2:]
-    ejecutarModulo(modulo, argv)
+    ejecutarModulo(nombreModRep, argv)
 elif opcion == '-a':
     tieneModulos = argv[2]
-    repositorio = argv[3]
-    agregarRepositorio(tieneModulos, repositorio)
+    urlRep = argv[3]
+    agregarRepositorio(tieneModulos, urlRep)

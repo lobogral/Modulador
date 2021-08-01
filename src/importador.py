@@ -1,38 +1,42 @@
 from sys import path
 import os
 
-def __importarDependencias(depsImportadas):
+def __importarDependencias(urlsDepsImportadas):
     arch = open('deps.txt', 'r')
-    depsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
-    depsImportar = [val for val in depsImportar if val not in depsImportadas]
+    urlsDepsImportar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
+    urlsDepsImportar = [val for val in urlsDepsImportar if val not in urlsDepsImportadas]
     arch.close()
 
-    if depsImportar:
+    if urlsDepsImportar:
         os.mkdir('modules')
         os.chdir('modules')
     
-    for depImportar in depsImportar:
-        if depImportar not in depsImportadas:
-            depsImportadas += [depImportar]
-            os.system('git clone ' + depImportar)
-            os.chdir(depImportar.split('/').pop())
+    for urlDepImportar in urlsDepsImportar:
+        if urlDepImportar not in urlsDepsImportadas:
+            urlsDepsImportadas += [urlDepImportar]
+            os.system('git clone ' + urlDepImportar)
+            nombreDep = urlDepImportar.split('/').pop()
+            os.chdir(nombreDep)
             if os.path.isfile('deps.txt'):
-                depsImportadas = __importarDependencias(depsImportadas)
+                urlsDepsImportadas = __importarDependencias(urlsDepsImportadas)
             os.chdir('..')
 
-    if depsImportar:
+    if urlsDepsImportar:
         os.chdir('..')
 
-    return depsImportadas
+    return urlsDepsImportadas
 
 
-def importarRepositorio(repositorio):
+def importarRepositorio(urlRep):
+
+    nombreRep = urlRep.split('/').pop()
+    
     # Agrego en un archivo temporal el nombre del repositorio
     os.chdir('..')
     if (not os.path.isdir('temp')): os.mkdir('temp')
     os.chdir('temp')
     arch = open("code.txt", "w")
-    arch.write(repositorio.split('/').pop())
+    arch.write(nombreRep)
     arch.close()
 
     # Importa el repositorio correspondiente
@@ -40,8 +44,8 @@ def importarRepositorio(repositorio):
     if (not os.path.isdir('codes')): os.mkdir('codes')
     os.chdir('codes')
 
-    if (not os.path.isdir(repositorio.split('/').pop())):
-        os.system('git clone ' + repositorio)
-        os.chdir(repositorio.split('/').pop())
+    if (not os.path.isdir(nombreRep)):
+        os.system('git clone ' + urlRep)
+        os.chdir(nombreRep)
         if os.path.isfile('deps.txt'): __importarDependencias([])
         os.chdir('..')

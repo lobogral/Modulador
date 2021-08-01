@@ -1,12 +1,13 @@
 import os
 
-def agregarRepositorio(tieneModulos, repositorio):
+def agregarRepositorio(tieneModulos, urlRep):
     
     os.chdir('../codes')
 
-    os.system('git clone ' + repositorio)
+    os.system('git clone ' + urlRep)
 
-    os.chdir(repositorio.split('/').pop())
+    nombreRep = urlRep.split('/').pop()
+    os.chdir(nombreRep)
     os.mkdir('src')
     os.chdir('src')
 
