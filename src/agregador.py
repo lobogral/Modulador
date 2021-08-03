@@ -2,7 +2,7 @@ import os
 
 def agregarRepositorio(tieneModulos, urlRep):
     
-    os.chdir('../codes')
+    os.chdir('../../')
 
     os.system('git clone ' + urlRep)
 

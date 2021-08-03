@@ -24,7 +24,7 @@ def ejecutarModulo(nombreModRep, argv):
     nombreRep = arch.readline()
     arch.close()
 
-    os.chdir('../codes/' + nombreRep + '/src/')
+    os.chdir('../../' + nombreRep + '/src/')
 
     # Agrego los src de las dependencias del repositorio
     if os.path.isfile('../../' + nombreRep + '/deps.txt'):

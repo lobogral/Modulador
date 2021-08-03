@@ -30,9 +30,7 @@ def importarRepositorio(urlRep):
     arch.close()
 
     # Importa el repositorio correspondiente
-    os.chdir('..')
-    if (not os.path.isdir('codes')): os.mkdir('codes')
-    os.chdir('codes')
+    os.chdir('../..')
 
     if (not os.path.isdir(nombreRep)):
         os.system('git clone ' + urlRep)

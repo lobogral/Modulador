@@ -16,3 +16,5 @@ elif opcion == '-a':
     tieneModulos = argv[2]
     urlRep = argv[3]
     agregarRepositorio(tieneModulos, urlRep)
+else:
+    print("Opción", opcion, "no disponible")
