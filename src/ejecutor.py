@@ -2,7 +2,7 @@ from sys import path
 import os
 
 def __agregarSrcDependencias(urlsDepsAgregadas, nombreRep):
-    arch = open('../../' + nombreRep + '/deps.txt', 'r')
+    arch = open('../../' + nombreRep + '/depsGit.txt', 'r')
     urlsDepsAgregar = [lineaArch.rstrip('\n') for lineaArch in arch.readlines()]
     urlsDepsAgregar = [val for val in urlsDepsAgregar if val not in urlsDepsAgregadas]
     arch.close()
@@ -12,7 +12,7 @@ def __agregarSrcDependencias(urlsDepsAgregadas, nombreRep):
             urlsDepsAgregadas += [urlDepAgregar]
             nombreDep = urlDepAgregar.split('/').pop()
             path.append('../../' + nombreDep + '/src/')
-            if os.path.isfile('../../' + nombreDep + '/deps.txt'):
+            if os.path.isfile('../../' + nombreDep + '/depsGit.txt'):
                 urlsDepsAgregadas = __agregarSrcDependencias(urlsDepsAgregadas, nombreDep)
 
     return urlsDepsAgregadas
@@ -27,7 +27,7 @@ def ejecutarModulo(nombreModRep, argv):
     os.chdir('../../' + nombreRep + '/src/')
 
     # Agrego los src de las dependencias del repositorio
-    if os.path.isfile('../../' + nombreRep + '/deps.txt'):
+    if os.path.isfile('../../' + nombreRep + '/depsGit.txt'):
         __agregarSrcDependencias([], nombreRep)
 
     # Ejecuto un modulo del repositorio
