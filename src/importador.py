@@ -5,42 +5,41 @@ from sys import path
 import os
 import re
 
-def __importarDepsGit(urlsDepsImportadas, rutArch):
-    arch = open(rutArch, 'r')
+def __importar_deps_git(urls_deps_importadas, rut_arch):
+    arch = open(rut_arch, 'r')
     repositorios = re.findall('https://github.com/\w+/\w+', arch.read())
-    urlsDepsImportar = [lineaArch.rstrip('\n') for lineaArch in repositorios]
-    urlsDepsImportar = [val for val in urlsDepsImportar if val not in urlsDepsImportadas]
+    urls_deps_importar = [linea_arch.rstrip('\n') for linea_arch in repositorios]
+    urls_deps_importar = [val for val in urls_deps_importar if val not in urls_deps_importadas]
     arch.close()
     
-    for urlDepImportar in urlsDepsImportar:
-        if urlDepImportar not in urlsDepsImportadas:
-            nombreRepDep = urlDepImportar.split('/').pop()
-            rutArch = nombreRepDep + '\setup.py'
-            os.system('git clone ' + urlDepImportar)
-            os.system('pip install --no-deps -e ' + nombreRepDep)
-            urlsDepsImportadas += [urlDepImportar]
-            if os.path.isfile(rutArch):
-                urlsDepsImportadas = __importarDepsGit(urlsDepsImportadas, rutArch)
+    for url_dep_importar in urls_deps_importar:
+        if url_dep_importar not in urls_deps_importadas:
+            nombre_rep_dep = url_dep_importar.split('/').pop()
+            rut_arch = nombre_rep_dep + '\setup.py'
+            os.system('git clone ' + url_dep_importar)
+            os.system('pip install --no-deps -e ' + nombre_rep_dep)
+            urls_deps_importadas += [url_dep_importar]
+            if os.path.isfile(rut_arch):
+                urls_deps_importadas = __importar_deps_git(urls_deps_importadas, rut_arch)
 
-    return urlsDepsImportadas
+    return urls_deps_importadas
 
-def importarRepositorio(urlRep):
+def importar_repositorio(url_rep):
 
-    nombreRep = urlRep.split('/').pop()
+    nombre_rep = url_rep.split('/').pop()
 
     # Importa el repositorio correspondiente
     os.chdir('../..')
 
-    if (not os.path.isdir(nombreRep)):
+    if (not os.path.isdir(nombre_rep)):
 
-        os.system('git clone ' + urlRep)
+        os.system('git clone ' + url_rep)
 
         # Importa las dependencias de git
-        rutArch = ""    
-        if os.path.isfile(nombreRep + '/setup.py'):
-            rutArch = nombreRep + "/setup.py"
-        if os.path.isfile(nombreRep + '/requirements.txt'):
-            rutArch = nombreRep + "/requirements.txt"
+        rut_arch = ""    
+        if os.path.isfile(nombre_rep + '/setup.py'):
+            rut_arch = nombre_rep + "/setup.py"
+        if os.path.isfile(nombre_rep + '/requirements.txt'):
+            rut_arch = nombre_rep + "/requirements.txt"
     
-        if os.path.isfile(nombreRep + '/depsGit.txt'):
-            __importarDepsGit([], rutArch)
+        __importar_deps_git([], rut_arch)
