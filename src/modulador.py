@@ -1,6 +1,5 @@
 from sys import argv
 from importador import importarRepositorio
-from ejecutor import ejecutarModulo
 from agregador import agregarRepositorio
 
 import os
