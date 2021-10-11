@@ -1,6 +1,11 @@
 """
 Realiza importaciones de modulos git en forma
 de arbol para desarrollo
+
+Nota
+-----
+Solo realiza las importaciones de modulos git
+para importar otro tipo de modulos, se debe hacer manualmente
 """
 import os
 import re
@@ -32,7 +37,7 @@ def __importar_deps_git(urls_deps_importadas, rut_arch):
             nombre_rep_dep = url_dep_importar.split('/').pop()
             rut_arch = nombre_rep_dep + '\\setup.py'
             os.system('git clone ' + url_dep_importar)
-            # os.system('pip install --no-deps -e ' + nombre_rep_dep)
+            os.system('pip install --no-deps -e ' + nombre_rep_dep)
             urls_deps_importadas += [url_dep_importar]
             if os.path.isfile(rut_arch):
                 urls_deps_importadas = __importar_deps_git(
