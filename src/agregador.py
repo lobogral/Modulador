@@ -1,28 +1,48 @@
+"""
+Importa un repositorio, agrega los archivos minimos de un
+paquete de python al repositorio, y consolida el repositorio
+"""
 import os
 
-def agregarRepositorio(tieneModulos, urlRep):
-    
+
+def agregar_repositorio(url_rep):
+
+    """
+    Realiza lo que esta descrito en el modulo
+
+    Parametros
+    ----------
+    url_rep: String
+        URLs del repositorio
+    """
+
     os.chdir('../../')
 
-    os.system('git clone ' + urlRep)
+    os.system('git clone ' + url_rep)
+    nombre_rep = url_rep.split('/').pop()
 
-    nombreRep = urlRep.split('/').pop()
-    os.chdir(nombreRep)
-    os.mkdir('src')
-    os.chdir('src')
+    os.chdir(nombre_rep)
+    os.mkdir(nombre_rep)
+    os.chdir(nombre_rep)
 
-    arch = open("holaMundo.py", "w")
-    arch.write("print('Hola mundo')")
-    arch.close()
+    with open("hola_mundo.py", 'w', encoding='utf8') as arch:
+        arch.write("print('Hola mundo')")
 
     os.chdir('..')
 
-    arch = open(".gitignore", "w")
-    arch.write("__pycache__")
-    if tieneModulos=='-s': arch.write("\nmodules/")
-    arch.close()
+    with open(".gitignore", 'w', encoding='utf8') as arch:
+        arch.write("__pycache__")
+        arch.write("\ndist")
+        arch.write("\n" + nombre_rep + ".egg-info")
 
-    if tieneModulos=='-s': open("deps.txt", "w").close()
+    with open("setup.py", 'w', encoding='utf8') as arch:
+        arch.write("from setuptools import setup, find_namespace_packages")
+        arch.write("\n")
+        arch.write("\nsetup(")
+        arch.write("\n    name='" + nombre_rep + "',")
+        arch.write("\n    version='0.1',")
+        arch.write("\n    packages=find_namespace_packages(),")
+        arch.write("\n)")
 
     os.system('git add .')
     os.system('git commit -m "Agrego esqueleto"')

@@ -1,17 +1,18 @@
+"""
+Hace distintas operaciones con modulos o paquetes
+de python incorporados a git
+"""
+
 from sys import argv
 from importador import importar_repositorio
-from agregador import agregarRepositorio
-
-import os
+from agregador import agregar_repositorio
 
 opcion = argv[1]
+url_rep = argv[2]
 
 if opcion == '-i':
-    urlRep = argv[2]
-    importar_repositorio(urlRep)    
+    importar_repositorio(url_rep)
 elif opcion == '-a':
-    tieneModulos = argv[2]
-    urlRep = argv[3]
-    agregarRepositorio(tieneModulos, urlRep)
+    agregar_repositorio(url_rep)
 else:
     print("Opción", opcion, "no disponible")

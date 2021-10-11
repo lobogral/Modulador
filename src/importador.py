@@ -1,11 +1,12 @@
 """
-Realiza importaciones de modulos git en forma
-de arbol para desarrollo
+Realiza importaciones de modulos o paquetes git en
+forma de arbol para desarrollo en pip
 
 Nota
 -----
 Solo realiza las importaciones de modulos git
-para importar otro tipo de modulos, se debe hacer manualmente
+para importar otro tipo de modulos, se debe hacer
+manualmente
 """
 import os
 import re
