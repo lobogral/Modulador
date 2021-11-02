@@ -1,6 +1,7 @@
-"""
-Hace distintas operaciones con modulos o paquetes
-de python incorporados a git
+"""Hace operaciones con módulos python-git.
+
+Hace distintas operaciones con módulos o paquetes
+de python incorporados a git.
 """
 
 from sys import argv

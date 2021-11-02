@@ -1,21 +1,19 @@
-"""
-Importa un repositorio, agrega los archivos minimos de un
+"""Agrega aspectos a repositorio.
+
+Importa un repositorio, agrega los archivos mínimos de un
 paquete de python al repositorio, y consolida el repositorio
 """
 import os
 
 
-def agregar_repositorio(url_rep):
+def agregar_repositorio(url_rep: str) -> None:
+    """Realiza lo que esta descrito en el módulo.
 
-    """
-    Realiza lo que esta descrito en el modulo
-
-    Parametros
+    Parameters
     ----------
-    url_rep: String
+    url_rep
         URLs del repositorio
     """
-
     os.chdir('../../')
 
     os.system('git clone ' + url_rep)

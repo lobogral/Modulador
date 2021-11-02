@@ -1,30 +1,34 @@
-"""
-Realiza importaciones de modulos o paquetes git en
-forma de arbol para desarrollo en pip
+"""Realiza importaciones de módulos.
+
+Realiza importaciones de módulos o paquetes git en
+forma de árbol para desarrollo en pip
 
 Nota
 -----
-Solo realiza las importaciones de modulos git
-para importar otro tipo de modulos, se debe hacer
+Solo realiza las importaciones de módulos git
+para importar otro tipo de módulos, se debe hacer
 manualmente
 """
 import os
 import re
 
 
-def __importar_deps_git(urls_deps_importadas, rut_arch):
+def __importar_deps_git(urls_deps_importadas: list[str],
+                        rut_arch: str) -> list[str]:
+    """Método privado, importa las dependencias de git.
 
-    """
-    Metodo privado, importa las dependencias de git
-
-    Parametros
+    Parameters
     ----------
-    url_deps_importadas: String
+    url_deps_importadas
         URLs de las dependencias importadas
-    rut_arch: String
+    rut_arch
         Ruta del archivo
-    """
 
+    Returns
+    -------
+    list[str]
+        URLs de las dependencias importadas
+    """
     with open(rut_arch, 'r', encoding='utf8') as arch:
         repositorios = re.findall('https://github.com/\\w+/\\w+', arch.read())
         urls_deps_importar = [linea_arch.rstrip('\n')
@@ -48,17 +52,14 @@ def __importar_deps_git(urls_deps_importadas, rut_arch):
     return urls_deps_importadas
 
 
-def importar_repositorio(url_rep):
+def importar_repositorio(url_rep: str) -> None:
+    """Hace la importación del módulo git principal.
 
-    """
-    Hace la importacion del modulo git principal
-
-    Parametros
+    Parameters
     ----------
-    url_rep: String
+    url_rep
         URL del repositorio
     """
-
     nombre_rep = url_rep.split('/').pop()
 
     # Importa el repositorio correspondiente
