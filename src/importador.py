@@ -3,8 +3,8 @@
 Realiza importaciones de módulos o paquetes git en
 forma de árbol para desarrollo en pip
 
-Nota
------
+Note
+----
 Solo realiza las importaciones de módulos git
 para importar otro tipo de módulos, se debe hacer
 manualmente
