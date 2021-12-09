@@ -8,21 +8,21 @@ import os
 import re
 
 
-def __importar_deps_git(urls_deps_importadas: list[str],
-                        rut_arch: str) -> list[str]:
-    """Método privado, importa las dependencias de git.
+def __importar_deps(deps_importadas: list[str],
+                    rut_arch: str) -> list[str]:
+    """Método privado, importa las dependencias.
 
     Parameters
     ----------
-    url_deps_importadas
-        URLs de las dependencias importadas
+    deps_importadas
+        Dependencias importadas
     rut_arch
         Ruta del archivo
 
     Returns
     -------
     list[str]
-        URLs de las dependencias importadas
+        Dependencias importadas
     """
     # Obtiene las dependencias a importar
     with open(rut_arch, 'r', encoding='utf8') as arch:
@@ -53,28 +53,28 @@ def __importar_deps_git(urls_deps_importadas: list[str],
                            texto)
             lista = texto.split(",")
 
-        urls_deps_importar = [val
-                              for val in lista
-                              if val not in urls_deps_importadas]
+        deps_importar = [val
+                        for val in lista
+                        if val not in deps_importadas]
 
     # Importa las dependencias sean de git o no
-    for url_dep_importar in urls_deps_importar:
-        if url_dep_importar not in urls_deps_importadas:
-            if "http" in url_dep_importar:
-                nombre_rep_dep = url_dep_importar.split('/').pop()
+    for dep_importar in deps_importar:
+        if dep_importar not in deps_importadas:
+            if "http" in dep_importar:
+                nombre_rep_dep = dep_importar.split('/').pop()
                 rut_arch = nombre_rep_dep + '\\setup.py'
-                os.system('git clone ' + url_dep_importar)
+                os.system('git clone ' + dep_importar)
                 os.system('pip install --no-deps -e ' + nombre_rep_dep)
-                urls_deps_importadas += [url_dep_importar]
+                deps_importadas += [dep_importar]
                 if os.path.isfile(rut_arch):
-                    urls_deps_importadas = __importar_deps_git(
-                        urls_deps_importadas,
+                    deps_importadas = __importar_deps(
+                        deps_importadas,
                         rut_arch)
             else:
-                os.system('pip install ' + url_dep_importar)
-                urls_deps_importadas += [url_dep_importar]
+                os.system('pip install ' + dep_importar)
+                deps_importadas += [dep_importar]
 
-    return urls_deps_importadas
+    return deps_importadas
 
 
 def importar_repositorio(url_rep: str) -> None:
@@ -101,4 +101,4 @@ def importar_repositorio(url_rep: str) -> None:
         if os.path.isfile(nombre_rep + '/requirements.txt'):
             rut_arch = nombre_rep + "/requirements.txt"
 
-        __importar_deps_git([], rut_arch)
+        __importar_deps([], rut_arch)
