@@ -3,11 +3,6 @@
 Realiza importaciones de módulos o paquetes git en
 forma de árbol para desarrollo en pip
 
-Note
-----
-Solo realiza las importaciones de módulos git
-para importar otro tipo de módulos, se debe hacer
-manualmente
 """
 import os
 import re
@@ -29,28 +24,39 @@ def __importar_deps_git(urls_deps_importadas: list[str],
     list[str]
         URLs de las dependencias importadas
     """
-
     # Obtiene las dependencias a importar
     with open(rut_arch, 'r', encoding='utf8') as arch:
-        
+
         texto = arch.read()
         if "setup.py" in rut_arch:
-            lista = re.findall("install_requires=\[[\s\S]+\]", texto)
+            lista = re.findall("install_requires=\\[[\\s\\S]+\\]", texto)
             if lista:
-                texto = re.sub("[\s]","", lista[0])
-                texto = re.sub("\'.+\@(.+)\+url_release\(\".+\"\)", "\'\g<1>",texto)
-                texto = re.sub("install_requires=\[(.+)\]","\g<1>",texto)
-                texto = re.sub("\'","",texto)
+                texto = re.sub("[\\s]",
+                               "",
+                               lista[0])
+                texto = re.sub("\'.+\\@(.+)\\+url_release\\(\".+\"\\)",
+                               "\'\\g<1>",
+                               texto)
+                texto = re.sub("install_requires=\\[(.+)\\]",
+                               "\\g<1>",
+                               texto)
+                texto = re.sub("\'",
+                               "",
+                               texto)
                 lista = texto.split(",")
         else:
-            texto = re.sub("[\s]",",",texto)
-            texto = re.sub("/releases+[/\w\.]+", "",texto)
+            texto = re.sub("[\\s]",
+                           ",",
+                           texto)
+            texto = re.sub("/releases+[/\\w\\.]+",
+                           "",
+                           texto)
             lista = texto.split(",")
 
         urls_deps_importar = [val
                               for val in lista
                               if val not in urls_deps_importadas]
-    
+
     # Importa las dependencias sean de git o no
     for url_dep_importar in urls_deps_importar:
         if url_dep_importar not in urls_deps_importadas:
