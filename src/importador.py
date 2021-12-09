@@ -29,25 +29,44 @@ def __importar_deps_git(urls_deps_importadas: list[str],
     list[str]
         URLs de las dependencias importadas
     """
-    with open(rut_arch, 'r', encoding='utf8') as arch:
-        repositorios = re.findall('https://github.com/\\w+/\\w+', arch.read())
-        urls_deps_importar = [linea_arch.rstrip('\n')
-                              for linea_arch in repositorios]
-        urls_deps_importar = [val
-                              for val in urls_deps_importar
-                              if val not in urls_deps_importadas]
 
+    # Obtiene las dependencias a importar
+    with open(rut_arch, 'r', encoding='utf8') as arch:
+        
+        texto = arch.read()
+        if "setup.py" in rut_arch:
+            lista = re.findall("install_requires=\[[\s\S]+\]", texto)
+            if lista:
+                texto = re.sub("[\s]","", lista[0])
+                texto = re.sub("\'.+\@(.+)\+url_release\(\".+\"\)", "\'\g<1>",texto)
+                texto = re.sub("install_requires=\[(.+)\]","\g<1>",texto)
+                texto = re.sub("\'","",texto)
+                lista = texto.split(",")
+        else:
+            texto = re.sub("[\s]",",",texto)
+            texto = re.sub("/releases+[/\w\.]+", "",texto)
+            lista = texto.split(",")
+
+        urls_deps_importar = [val
+                              for val in lista
+                              if val not in urls_deps_importadas]
+    
+    # Importa las dependencias sean de git o no
     for url_dep_importar in urls_deps_importar:
         if url_dep_importar not in urls_deps_importadas:
-            nombre_rep_dep = url_dep_importar.split('/').pop()
-            rut_arch = nombre_rep_dep + '\\setup.py'
-            os.system('git clone ' + url_dep_importar)
-            os.system('pip install --no-deps -e ' + nombre_rep_dep)
-            urls_deps_importadas += [url_dep_importar]
-            if os.path.isfile(rut_arch):
-                urls_deps_importadas = __importar_deps_git(
-                    urls_deps_importadas,
-                    rut_arch)
+            if "http" in url_dep_importar:
+                nombre_rep_dep = url_dep_importar.split('/').pop()
+                rut_arch = nombre_rep_dep + '\\setup.py'
+                os.system('git clone ' + url_dep_importar)
+                os.system('pip install --no-deps -e ' + nombre_rep_dep)
+                urls_deps_importadas += [url_dep_importar]
+                if os.path.isfile(rut_arch):
+                    urls_deps_importadas = __importar_deps_git(
+                        urls_deps_importadas,
+                        rut_arch)
+            else:
+                os.system('pip install ' + url_dep_importar)
+                urls_deps_importadas += [url_dep_importar]
 
     return urls_deps_importadas
 
