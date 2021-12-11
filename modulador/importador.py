@@ -88,8 +88,6 @@ def importar_repositorio(url_rep: str) -> None:
     nombre_rep = url_rep.split('/').pop()
 
     # Importa el repositorio correspondiente
-    os.chdir('../..')
-
     if not os.path.isdir(nombre_rep):
 
         os.system('git clone ' + url_rep)

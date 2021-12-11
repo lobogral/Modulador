@@ -14,7 +14,6 @@ def agregar_repositorio(url_rep: str) -> None:
     url_rep
         URLs del repositorio
     """
-    os.chdir('../../')
 
     os.system('git clone ' + url_rep)
     nombre_rep = url_rep.split('/').pop()
