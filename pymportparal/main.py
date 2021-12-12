@@ -5,8 +5,8 @@ de python incorporados a git.
 """
 
 from sys import argv
-from modulador.importador import importar_repositorio
-from modulador.agregador import agregar_repositorio
+from pymportparal.importador import importar_repositorio
+from pymportparal.agregador import agregar_repositorio
 
 def main():
 
