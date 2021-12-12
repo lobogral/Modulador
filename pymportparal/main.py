@@ -6,16 +6,8 @@ de python incorporados a git.
 
 from sys import argv
 from pymportparal.importador import importar_repositorio
-from pymportparal.agregador import agregar_repositorio
 
 def main():
 
-    opcion = argv[1]
-    url_rep = argv[2]
-
-    if opcion == '-i':
-        importar_repositorio(url_rep)
-    elif opcion == '-a':
-        agregar_repositorio(url_rep)
-    else:
-        print("Opción", opcion, "no disponible")
+    url_rep = argv[1]
+    importar_repositorio(url_rep)
