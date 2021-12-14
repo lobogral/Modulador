@@ -17,7 +17,7 @@ Al utilizar pymportparal las dependencias simples (No tienen repositorio git) se
 repositorios de git, se instalan en la carpeta donde se usó el comando en modo desarrollo sin repetir importaciones.
 
 Esto es muy útil cuando se desea trabajar en herramientas como Visual Studio Code, Atom, etc. Y se requiere modificar varios repositorios
-simultáneamente, sin necesidad de abrir el repositorio de la dependencia a modificar cerrando la dependencia en la que se está trabajando actualmente.
+simultáneamente, sin necesidad de abrir el repositorio de la dependencia a modificar cerrando el repositorio de la dependencia en la que se está trabajando actualmente.
 
 ## Instalación
 
