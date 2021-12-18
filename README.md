@@ -20,7 +20,7 @@ Al utilizar pymportparal:
 * las dependencias que son repositorios de git, se importan en la carpeta donde se usó el comando en modo desarrollo sin repetir importaciones.
 
 Esto es muy útil cuando se desea trabajar en herramientas como Visual Studio Code, Atom, etc. Y se requiere modificar varios repositorios
-simultáneamente, sin necesidad de abrir el repositorio de la dependencia a modificar cerrando el repositorio de la dependencia en la que se está trabajando actualmente.
+simultáneamente, sin necesidad de abrir el repositorio a modificar cerrando el repositorio en el que se está trabajando actualmente.
 
 ## Instalación
 
@@ -40,6 +40,6 @@ Si se desea instalar para desarrollo, ejecutar lo siguiente:
     
 ## Ejecución
 
-Sólo es necesario escribir el comando junto al repositorio al que se le desean descargar las dependencias, por ejemplo:
+Sólo es necesario escribir el comando junto al repositorio al que se desea descargar con las dependencias, por ejemplo:
 
     $ pymportparal https://github.com/lobogral/ejercicios_estadistica
