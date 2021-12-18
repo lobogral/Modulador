@@ -5,8 +5,8 @@ Por ejemplo, si el árbol de dependencias de un programa en python es de esta ma
 
 ```
 programa
-│    dependencia_1
-│    dependencia_git_1   
+│   dependencia_1
+│   dependencia_git_1   
 │
 └───dependencia_git_2
         dependencia_git_1
