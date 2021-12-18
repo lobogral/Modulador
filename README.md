@@ -13,8 +13,11 @@ programa
         dependencia_2
 ```
 
-Al utilizar pymportparal las dependencias simples (No tienen repositorio git) se importan normalmente, y las dependencias que son
-repositorios de git, se instalan en la carpeta donde se usó el comando en modo desarrollo sin repetir importaciones.
+Al utilizar pymportparal: 
+
+* El programa que es repositorio git se importa normalmente.
+* Las dependencias simples (No son repositorio git) se importan normalmente.
+* las dependencias que son repositorios de git, se importan en la carpeta donde se usó el comando en modo desarrollo sin repetir importaciones.
 
 Esto es muy útil cuando se desea trabajar en herramientas como Visual Studio Code, Atom, etc. Y se requiere modificar varios repositorios
 simultáneamente, sin necesidad de abrir el repositorio de la dependencia a modificar cerrando el repositorio de la dependencia en la que se está trabajando actualmente.
